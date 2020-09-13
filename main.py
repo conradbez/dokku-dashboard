@@ -3,8 +3,13 @@ import paramiko
 from paramiko import AutoAddPolicy
 import os
 import re
-dokku_host = '128.199.180.162'
 
+with open("dokku_host.config") as f:
+    dokku_host = f.readlines()
+    dokku_host = dokku_host[0].replace('\n','')
+    print(dokku_host)
+    st.sidebar.write('Connecting to {}'.format(dokku_host))
+    
 
 def cleanseUserInput(oneWordedInput):
     return re.sub(r'\W+', '', oneWordedInput)
