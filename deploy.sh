@@ -21,6 +21,7 @@ git remote add dokku dokku@$dokku_host:gui
 
 
 git add *
+git add --force .ssh dokku_host.config
 git commit -m "deploying"
 git push dokku master
 
