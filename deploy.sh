@@ -19,6 +19,7 @@ ssh  -o StrictHostKeyChecking=no root@$dokku_host dokku --force apps:destroy das
 ssh  -o StrictHostKeyChecking=no root@$dokku_host dokku apps:create dashboard
 
 # deploy our dashboard app
+git remote remove dokku
 git remote add dokku dokku@$dokku_host:dashboard
 git add *
 # need to add these so our dashboared app has the connection details to execute commands on dokku
