@@ -1,5 +1,5 @@
 
-echo Enter a secure password you will use to access your dokku instance \(will be used to encrypt your ssh key\)
+echo Enter a secure password you will use to access your dokku instance (will be used to encrypt your ssh key)
 
 read user_password
 echo  $user_password
