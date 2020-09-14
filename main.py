@@ -49,7 +49,7 @@ if ssh_key_password:
             st.write(stdout.readlines())
             
         if st.checkbox('Provision Postgress'):
-            postgress_name = st.text_input('Name the services:')
+            postgress_name = cleanseUserInput(st.text_input('Name the services:'))
             if len(postgress_name) > 0:
                 try:
                     st.write(execD("dokku postgres:create {}".format(postgress_name)))
