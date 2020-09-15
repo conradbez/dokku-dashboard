@@ -10,14 +10,14 @@ read dokku_host
 rm dokku_host.config
 echo $dokku_host >> dokku_host.config
 
-ssh-keygen -f ./.ssh -N $user_password
+ssh-keygen -f ./.id_rsa -N $user_password
 
 
 # add the created ssh key
 ssh root@$dokku_host dokku ssh-keys:remove dokkudashboard
-cat ./.ssh.pub | ssh root@$dokku_host dokku ssh-keys:add dokkudashboard
-cat ./.ssh.pub | ssh root@$dokku_host dokku ssh-keys:add dokkudashboard
-cat ./.ssh.pub | ssh root@$dokku_host tee -a  /root/.ssh/authorized_keys
+cat ./.id_rsa.pub | ssh root@$dokku_host dokku ssh-keys:add dokkudashboard
+cat ./.id_rsa.pub | ssh root@$dokku_host dokku ssh-keys:add dokkudashboard
+cat ./.id_rsa.pub | ssh root@$dokku_host tee -a  /root/.ssh/authorized_keys
 
 
 # create the dashboard app
