@@ -19,7 +19,8 @@ ssh_key_password = st.sidebar.text_input('Password set during deployment')
 if ssh_key_password:
     client = paramiko.SSHClient()
     # key = paramiko.RSAKey.from_private_key_file('/home/ubuntu/.ssh/id_rsa')
-    key = paramiko.RSAKey.from_private_key_file('.ssh',ssh_key_password)
+    st.write(ssh_key_password)
+    key = paramiko.RSAKey.from_private_key_file('.ssh',password=ssh_key_password)
     
     client.set_missing_host_key_policy(AutoAddPolicy())
     client.connect(dokku_host,username='root')

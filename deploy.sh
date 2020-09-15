@@ -10,9 +10,13 @@ read dokku_host
 rm dokku_host.config
 echo $dokku_host >> dokku_host.config
 
+ssh-keygen -f ./.ssh -N $user_password
+
+
 # add the created ssh key
 ssh root@$dokku_host dokku ssh-keys:remove dokkudashboard
 cat ./.ssh.pub | ssh root@$dokku_host dokku ssh-keys:add dokkudashboard
+
 
 # create the dashboard app
 ssh  -o StrictHostKeyChecking=no root@$dokku_host dokku --force apps:destroy dashboard
