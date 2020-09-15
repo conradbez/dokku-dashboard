@@ -44,16 +44,25 @@ def provisionPostress(appname):
             st.write(execD("sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres"))
             st.write(execD("dokku postgres:create {}".format(postgress_name)))
         st.write(execD("dokku postgres:link {} {}".format(postgress_name,appname)))
-    
 
+
+def getConnectionToDokku(dokku_host, password):
+    import paramiko
+    client = paramiko.SSHClient()
+    f = open('./id_rsa','r')
+    s = f.read()
+    from io import StringIO
+    keyfile = StringIO(s)
+    mykey = paramiko.RSAKey.from_private_key(keyfile, password=password)
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(dokku_host, username='root', pkey=mykey, look_for_keys=False)
+    stdin, stdout, stderr = client.exec_command('uptime')
+    return client
+    
 # Get ssh connection
 ssh_key_password = st.sidebar.text_input('Password set during deployment', type="password")
 if ssh_key_password:
-    client = paramiko.SSHClient()
-    key = paramiko.RSAKey.from_private_key_file('.ssh',password=ssh_key_password)
-    
-    client.set_missing_host_key_policy(AutoAddPolicy())
-    client.connect(dokku_host,username='root', pkey=key)
+    client = getConnectionToDokku(dokku_host= dokku_host, password=ssh_key_password)
     st.sidebar.write('Connected to dokku')
     
     def execD(com):
