@@ -77,8 +77,11 @@ if ssh_key_password:
         
     availible_apps = execD('dokku --quiet apps:list')
     availible_apps = list(map(str.strip, availible_apps))
-    selected_app = st.sidebar.selectbox('What app would you like to work with',['No app selected']+availible_apps+['Create new'])
+    selected_app = st.sidebar.selectbox('What app would you like to work with',['Dokku server']+availible_apps+['Create new'])
     
+    if selected_app=='Dokku server':
+        if st.button(f'Reboot server'):
+            client.exec_command('reboot')
     
     if selected_app == 'Create new':
         user_app_name = cleanseUserInput(st.text_input('App name:'))
