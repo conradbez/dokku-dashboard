@@ -25,9 +25,13 @@ def appReport(appname):
 def destroyApp(appname):
     confirm_destruction = st.text_input("Type app name to destroy")
     if confirm_destruction == appname:
-        if st.buttton(f'Destroy {appname}'):
+        st.write('Press button to destroy app')
+        if st.button(f'Destroy {appname}'):
             stdin, stdout, stderr = client.exec_command('dokku --force apps:destroy {}'.format(appname))
             st.write(stdout.readlines())
+    else:
+        st.write("Text does not match")
+        
 
 def desplayAppLogs(appname):
         stdin, stdout, stderr = client.exec_command(f'dokku logs {appname}')
@@ -71,7 +75,7 @@ if ssh_key_password:
         return stdout.readlines()
         
     availible_apps = execD('dokku --quiet apps:list')
-    
+    availible_apps = list(map(str.strip, availible_apps))
     selected_app = st.sidebar.selectbox('What app would you like to work with',['No app selected']+availible_apps+['Create new'])
     
     
@@ -96,7 +100,7 @@ if ssh_key_password:
             appReport(selected_app)
             
             
-        if selected_action == 'Detroy app':
+        if selected_action == 'Destroy app':
             destroyApp(selected_app)
             
         if selected_action == 'Provision Postgress':
