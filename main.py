@@ -45,6 +45,7 @@ def provisionPostress(appname):
         try:
             st.write(execD("dokku postgres:create {}".format(postgress_name)))
         except:
+            st.write("Seems you don't have the postgress add-on, we'll install that you you :)")
             st.write(execD("sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres"))
             st.write(execD("dokku postgres:create {}".format(postgress_name)))
         st.write(execD("dokku postgres:link {} {}".format(postgress_name,appname)))
