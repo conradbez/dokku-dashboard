@@ -83,6 +83,7 @@ if ssh_key_password:
         if st.button(f'Reboot server'):
             client.exec_command('reboot')
     
+    
     elif selected_app == 'Create new':
         user_app_name = cleanseUserInput(st.text_input('App name:'))
         if len(user_app_name)>0:
