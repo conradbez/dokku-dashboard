@@ -18,9 +18,9 @@ ssh root@$dokku_host dokku ssh-keys:remove dokkudashboard
 cat ./id_rsa.pub | ssh root@$dokku_host dokku ssh-keys:remove dokkudashboard
 cat ./id_rsa.pub | ssh root@$dokku_host dokku ssh-keys:add dokkudashboard
 
-ssh root@$dokku_host cp /root/.ssh/authorized_keys  -n /root/.ssh/authorized_keys.original # copy file if doesn't exist to preserve original
-ssh root@$dokku_host cp /root/.ssh/authorized_keys.original /root/.ssh/authorized_keys # make sure we base off the original
-cat ./id_rsa.pub | ssh root@$dokku_host tee -a  /root/.ssh/authorized_keys
+# ssh root@$dokku_host cp /root/.ssh/authorized_keys  -n /root/.ssh/authorized_keys.original # copy file if doesn't exist to preserve original
+# ssh root@$dokku_host cp /root/.ssh/authorized_keys.original /root/.ssh/authorized_keys # make sure we base off the original
+cat ./id_rsa.pub | ssh root@$dokku_host tee -a  /root/.ssh/authorized_keys2
 
 
 # create the dashboard app
