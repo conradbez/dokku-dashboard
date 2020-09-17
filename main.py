@@ -37,10 +37,12 @@ def desplayAppLogs(appname):
         stdin, stdout, stderr = client.exec_command(f'dokku logs {appname}')
         st.write(stdout.readlines())
 
-            
+def managePostgress(appname): 
+    provisionPostress(appname)
+
             
 def provisionPostress(appname):
-    postgress_name = cleanseUserInput(st.text_input('Name the services:'))
+    postgress_name = cleanseUserInput(st.text_input('Name the new Postgress service:'))
     if len(postgress_name) > 0:
         try:
             st.write(execD("dokku postgres:create {}".format(postgress_name)))
@@ -52,7 +54,6 @@ def provisionPostress(appname):
 
 
 def getConnectionToDokku(dokku_host, password):
-    import paramiko
     client = paramiko.SSHClient()
     f = open('./id_rsa','r')
     s = f.read()
@@ -64,6 +65,20 @@ def getConnectionToDokku(dokku_host, password):
     stdin, stdout, stderr = client.exec_command('uptime')
     return client
     
+def managesEnvVars(appname):
+    stdin, stdout, stderr = client.exec_command(f'dokku --quiet config {appname}')
+    keys = stdout.readlines()
+    st.write(keys)
+    st.write('Set variable')
+    newVarName = cleanseUserInput(st.text_input('Name:'))
+    newVarValue = cleanseUserInput(st.text_input('Value:'))
+    if newVarName and newVarValue and st.button(f'Set {newVarName} = {newVarValue}'):
+        stdin, stdout, stderr = client.exec_command(f'dokku --quiet config:set {appname} {newVarName}={newVarValue}')
+        st.write(stdout.readlines)
+    
+
+
+
 # Get ssh connection
 ssh_key_password = st.sidebar.text_input('Password set during deployment', type="password")
 if ssh_key_password:
@@ -94,9 +109,10 @@ if ssh_key_password:
     elif selected_app != 'No app selected' and selected_app:
         selected_action = st.selectbox(f'What would you like to do with: {selected_app}', [
             'Info',
-            'Destroy app', 
+            'Manage env vars',
             'Manage Postgress',
-            'Logs'            
+            'Logs',
+            'Destroy app',          
             ])
         if selected_action == 'Logs':
             desplayAppLogs(selected_app)
@@ -108,10 +124,8 @@ if ssh_key_password:
         if selected_action == 'Destroy app':
             destroyApp(selected_app)
             
-        if selected_action == 'Provision Postgress':
-            provisionPostress(selected_app)
-            
-            
-            
+        if selected_action == 'Manage Postgress':
+            managePostgress(selected_app)
 
-    
+        if selected_action == 'Manage env vars':
+            managesEnvVars(selected_app)
