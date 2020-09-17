@@ -74,7 +74,7 @@ def managesEnvVars(appname):
     newVarValue = cleanseUserInput(st.text_input('Value:'))
     if newVarName and newVarValue and st.button(f'Set {newVarName} = {newVarValue}'):
         stdin, stdout, stderr = client.exec_command(f'dokku --quiet config:set {appname} {newVarName}={newVarValue}')
-        st.write(stdout.readlines)
+        st.write(stdout.readlines())
     
 
 
