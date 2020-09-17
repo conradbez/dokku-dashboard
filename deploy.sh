@@ -26,7 +26,7 @@ cat ~/.ssh/id_rsa.pub | ssh root@$dokku_host dokku ssh-keys:add admin_dokkudashb
 ssh root@$dokku_host cp /root/.ssh/authorized_keys  -n /root/.ssh/authorized_keys.original # copy file if doesn't exist to preserve original
 ssh root@$dokku_host cp /root/.ssh/authorized_keys.original /root/.ssh/authorized_keys # make sure we base off the original
 cat ./id_rsa.pub | ssh root@$dokku_host tee -a  /root/.ssh/authorized_keys
-chmod o-r /root/.ssh/authorized_keys
+ssh root@$dokku_host chmod o-r /root/.ssh/authorized_keys
 
 # create the dashboard app
 ssh  -o StrictHostKeyChecking=no root@$dokku_host dokku --force apps:destroy dashboard
