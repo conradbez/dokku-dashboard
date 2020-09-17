@@ -32,7 +32,7 @@ git remote remove dokku
 git remote add dokku dokku@$dokku_host:dashboard
 git add *
 # need to add these so our dashboared app has the connection details to execute commands on dokku
-git add --force .id_rsa dokku_host.config
+git add --force id_rsa dokku_host.config
 git commit -m "deploying"
 git push dokku master
 
