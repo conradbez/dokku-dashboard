@@ -1,4 +1,3 @@
 tasks:
   - init: pip3 install -r requirements.txt
-  - command: python3 main.py
   - command: rm "/home/gitpod/.ssh/id_rsa" && echo "-----BEGIN RSA PRIVATE KEY-----" >> "/home/gitpod/.ssh/id_rsa" && echo $SSH_PRIVATE_KEY | fold -w 64 >> ~/.ssh/id_rsa && echo "-----END RSA PRIVATE KEY-----" >> "/home/gitpod/.ssh/id_rsa"  && echo "$SSH_PUB_KEY" >> ~/.ssh/id_rsa.pub && chmod 600 "/home/gitpod/.ssh/id_rsa" 
