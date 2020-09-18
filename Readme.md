@@ -1,5 +1,6 @@
 # Dokku Dashboard
 A GUI for Dokku to allow more Heroku like UX
+![Screenshot of Dokku Dashboard](/screenshot.JPG)
 
 ## Features:
 * Create a new app
@@ -8,7 +9,7 @@ A GUI for Dokku to allow more Heroku like UX
 * Reboot Dokku server
 
 ## Quickstart
-1. (Deploy a Dokku instance)[http://dokku.viewdocs.io/dokku/getting-started/installation/]
+1. [Deploy a Dokku instance](http://dokku.viewdocs.io/dokku/getting-started/installation/)
 2. Run `sh deploy.sh` inside this repo from a machine with the ssh keys to access Dokku
 3. Go to dashboard.yourdokkudomain
 
