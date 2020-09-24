@@ -52,6 +52,22 @@ def provisionPostress(appname):
             st.write(execD("dokku postgres:create {}".format(postgress_name)))
         st.write(execD("dokku postgres:link {} {}".format(postgress_name,appname)))
 
+def deployFromPublicRepo(dokku_host,appname):
+    repo_url = st.text_input('Repo url:')
+    if len(repo_url)<1:
+        st.image('github_get_url.JPF')
+    else:
+        import subprocess
+        stdout, stderr = subprocess.Popen(['git', 'pull', 'repo_url'],stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        st.write(stdout) 
+        st.write(stderr)
+        command = f'git remote add dokku dokku@{dokku_host}:{appname} && git push dokku master'.split(' ')
+        st.write('command')
+        stdout, stderr = subprocess.Popen(command,stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        st.write(stdout) 
+        st.write(stderr)
+
+
 
 def getConnectionToDokku(dokku_host, password):
     client = paramiko.SSHClient()
@@ -112,6 +128,7 @@ if ssh_key_password:
             'Manage env vars',
             'Manage Postgress',
             'Logs',
+            'Deploy from public repo',
             'Destroy app',          
             ])
         if selected_action == 'Logs':
@@ -129,3 +146,6 @@ if ssh_key_password:
 
         if selected_action == 'Manage env vars':
             managesEnvVars(selected_app)
+
+        if selected_action == 'Deploy from public repo':
+            deployFromPublicRepo(dokku_host, selected_app)
