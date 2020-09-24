@@ -22,7 +22,6 @@ ssh root@$dokku_host dokku ssh-keys:remove admin_dokkudashboard
 cat ~/.ssh/id_rsa.pub | ssh root@$dokku_host dokku ssh-keys:remove admin_dokkudashboard
 cat ~/.ssh/id_rsa.pub | ssh root@$dokku_host dokku ssh-keys:add admin_dokkudashboard
 
-
 ssh root@$dokku_host cp /root/.ssh/authorized_keys  -n /root/.ssh/authorized_keys.original # copy file if doesn't exist to preserve original
 ssh root@$dokku_host cp /root/.ssh/authorized_keys.original /root/.ssh/authorized_keys # make sure we base off the original
 cat ./id_rsa.pub | ssh root@$dokku_host tee -a  /root/.ssh/authorized_keys
